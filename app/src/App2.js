@@ -1,4 +1,3 @@
-//hooks
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Title from './component/Title';
@@ -6,23 +5,29 @@ import Menu from './component/Menu';
 import Home from './component/Home';
 import About from './component/About';
 import 'bootstrap/dist/css/bootstrap.css';
-import React, { useState } from 'react'
+import React, { Component } from 'react'
 
-export default function App() {
+export default class App extends Component {
 
-  const [name,setName]= useState("name");
-  const [collegeName,setcollegeName]= useState("svcoledge");
+  constructor(){
 
-  let change = (newName)=>{
-    setName(newName)
+    super();
+    this.state={users:[]}
   }
 
+  componentWillMount()
+  {
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => response.json())
+  .then(json => this.setState({users:json}))
+  }
+
+
+  render() {
     return (
       <div className="App">
         <Title/>
-        <h1>{name}</h1>
-        <h2>{collegeName}</h2>
-        <button onClick={() => change("avi")}>Change</button>
       </div>
     )
+  }
 }
